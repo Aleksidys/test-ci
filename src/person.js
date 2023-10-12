@@ -1,19 +1,9 @@
- let person = {name: 'Маг', health: 90}
- export function getHealth(person){
-    let health = person.health;
-    switch (true) {
-        case health >= 50:
-          return 'healthy';
-          break;
-        case health >= 25:
-            return 'wounded';
-          break;
-          case health <= 25:
-            return 'critical';
-          break;
-        default:
-         return 'unknown';    
-      }
- }
-
-
+export default function getHealth(person) {
+  const { health } = person;
+  if (health >= 50) {
+    return 'healthy';
+  } if (health >= 25) {
+    return 'wounded';
+  }
+  return 'critical';
+}
