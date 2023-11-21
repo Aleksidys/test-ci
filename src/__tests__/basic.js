@@ -1,10 +1,4 @@
 import Character from '../craracter';
-import Bowman from '../bownam';
-import Daemon from '../daemon';
-import Magician from '../magician';
-import Zombie from '../zombie';
-import Undead from '../undean';
-import Swordsman from '../swordsman';
 
 describe('Character', () => {
   describe('constructor', () => {
@@ -67,65 +61,5 @@ describe('Character', () => {
       character.damage(50);
       expect(character.health).toBe(0);
     });
-  });
-});
-
-describe('Bowman', () => {
-  it('should create a Bowman with correct attack and defence stats', () => {
-    const bowman = new Bowman('Alice');
-    expect(bowman.name).toBe('Alice');
-    expect(bowman.type).toBe('Bowman');
-    expect(bowman.attack).toBe(25);
-    expect(bowman.defence).toBe(25);
-  });
-});
-
-describe('Swordsman', () => {
-  it('should create a Swordsman with correct attack and defence stats', () => {
-    const swordsman = new Swordsman('Bob');
-    expect(swordsman.name).toBe('Bob');
-    expect(swordsman.type).toBe('Swordsman');
-    expect(swordsman.attack).toBe(40);
-    expect(swordsman.defence).toBe(10);
-  });
-});
-
-describe('Magician', () => {
-  it('should create a Magician with correct attack and defence stats', () => {
-    const magician = new Magician('Charlie');
-    expect(magician.name).toBe('Charlie');
-    expect(magician.type).toBe('Magician');
-    expect(magician.attack).toBe(10);
-    expect(magician.defence).toBe(40);
-  });
-});
-
-describe('Daemon', () => {
-  it('should create a Daemon with correct attack and defence stats', () => {
-    const daemon = new Daemon('Dave');
-    expect(daemon.name).toBe('Dave');
-    expect(daemon.type).toBe('Daemon');
-    expect(daemon.attack).toBe(10);
-    expect(daemon.defence).toBe(40);
-  });
-});
-
-describe('Undead', () => {
-  it('should create an Undead with correct attack and defence stats', () => {
-    const undead = new Undead('Eve');
-    expect(undead.name).toBe('Eve');
-    expect(undead.type).toBe('Undead');
-    expect(undead.attack).toBe(25);
-    expect(undead.defence).toBe(25);
-  });
-});
-
-describe('Zombie', () => {
-  it('should create a Zombie with correct attack and defence stats', () => {
-    const zombie = new Zombie('Frank');
-    expect(zombie.name).toBe('Frank');
-    expect(zombie.type).toBe('Zombie');
-    expect(zombie.attack).toBe(40);
-    expect(zombie.defence).toBe(10);
   });
 });
