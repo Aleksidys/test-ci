@@ -1,53 +1,72 @@
-import Team from '../Set';
-import Character from '../craracter';
-import ErrorRepository from '../Map';
+import Daemon from '../daemon';
+import { getBuffer } from '../ArrayBuffer';
+import ArrayBufferConverter from '../ArrayBuffer';
 
+describe('ArrayBufferConverter', () => {
+  let converter;
 
-describe('Team', () => {
-  it('should add a character to the team', () => {
-    const team = new Team();
-    team.add('Character1');
-    expect(team.members.size).toBe(1);
+  beforeEach(() => {
+    converter = new ArrayBufferConverter();
   });
 
-  it('should throw an error when adding an existing character to the team', () => {
-    const team = new Team();
-    team.add('Character1');
-    expect(() => {
-      team.add('Character1');
-    }).toThrowError('Персонаж уже есть в команде.');
+  it('should set the buffer when loaded', () => {
+    const buffer = getBuffer();
+    converter.load(buffer);
+    expect(converter.buffer).toEqual(buffer);
   });
 
-  it('should add multiple characters to the team', () => {
-    const team = new Team();
-    team.addAll('Character1', 'Character2', 'Character3');
-    expect(team.members.size).toBe(3);
+  it('should throw an error if buffer is not loaded when calling toString()', () => {
+    expect(() => converter.toString()).toThrow('ArrayBuffer is not loaded.');
   });
 
-  it('should return an array of team members', () => {
-    const team = new Team();
-    team.addAll('Character1', 'Character2', 'Character3');
-    expect(team.toArray()).toEqual(['Character1', 'Character2', 'Character3']);
+  it('should convert the loaded buffer to string', () => {
+    const buffer = getBuffer();
+    converter.load(buffer);
+    const result = converter.toString();
+    expect(typeof result).toBe('string');
+    expect(result).toBe('{"data":{"user":{"id":1,"name":"Hitman","level":10}}}');
   });
 });
 
-describe('ErrorRepository', () => {
-  it('should add error to the repository', () => {
-    const errorRepo = new ErrorRepository();
-    errorRepo.addError(404, 'Not Found');
-    expect(errorRepo.errorMap.size).toBe(1);
+describe('Daemon', () => {
+  it('should create Daemon', () => {
+    const daemon = new Daemon('Nancy');
+    expect(daemon.name).toBe('Nancy');
   });
 
-  it('should translate error code to description', () => {
-    const errorRepo = new ErrorRepository();
-    errorRepo.addError(404, 'Not Found');
-    errorRepo.addError(500, 'Internal Server Error');
-    expect(errorRepo.translate(404)).toBe('Not Found');
-    expect(errorRepo.translate(500)).toBe('Internal Server Error');
+  it('should return stoned status', () => {
+    const daemon = new Daemon('Nancy');
+    expect(daemon.stoned).toBeFalsy();
+    daemon.stoned = true;
+    expect(daemon.stoned).toBeTruthy();
   });
 
-  it('should return "Unknown error" for unknown error code', () => {
-    const errorRepo = new ErrorRepository();
-    expect(errorRepo.translate(403)).toBe('Unknown error');
+  it('should set proper attack value considering distance and stoned status', () => {
+    const daemon = new Daemon('Nancy');
+
+    daemon.distance = 1;
+    daemon.stoned = false;
+    expect(daemon.attack).toBe(10);
+
+    daemon.distance = 2;
+    daemon.stoned = true;
+    expect(daemon.attack).toBe(0);
+
+    daemon.distance = 3;
+    daemon.stoned = false;
+    expect(daemon.attack).toBe(2);
+  });
+
+  it('should set new attack value', () => {
+    const daemon = new Daemon('Nancy');
+    daemon.attack = 20;
+    expect(daemon.attack).toBe(Infinity);
+  });
+
+  it('should set proper stoned status', () => {
+    const daemon = new Daemon('Nancy');
+    expect(daemon.stoned).toBeFalsy();
+    daemon.stoned = true;
+    expect(daemon.stoned).toBeTruthy();
   });
 });
