@@ -18,6 +18,29 @@ class Character {
     this.defence = undefined;
   }
 
+  get stoned() {
+    return this._stoned;
+  }
+
+  set stoned(value) {
+    this._stoned = value;
+  }
+
+  get attack() {
+    let attack = this._attack - Math.log2(this.distance) * 5;
+    if (this.stoned) {
+      attack -= Math.floor(Math.log2(this.distance) * 5);
+    }
+    if (attack < 0) {
+      return 0;
+    }
+    return Math.round(attack);
+  }
+
+  set attack(value) {
+    this._attack = value;
+  }
+
   lvlUp() {
     if (this.health <= 0) {
       throw new Error('Персонаж уже мертв.');

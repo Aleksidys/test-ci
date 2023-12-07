@@ -1,6 +1,5 @@
 import Daemon from '../daemon';
-import { getBuffer } from '../ArrayBuffer';
-import ArrayBufferConverter from '../ArrayBuffer';
+import ArrayBufferConverter, { getBuffer } from '../ArrayBuffer';
 
 describe('ArrayBufferConverter', () => {
   let converter;
